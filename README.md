@@ -1,0 +1,2 @@
+# logicCalc
+Logic Calculator Application
