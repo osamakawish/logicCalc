@@ -123,6 +123,8 @@ def computeList(Code):
     # Make sure number of left brackets still == no of right brackets
     checkBrackets(Code);
     
+    if l == 0:
+        return None
     
     # Base case: Code = ['T'] or ['F'] or has brackets.
     if l == 1:
@@ -205,4 +207,5 @@ def computeList(Code):
 
 
 def compute(s):
-    computeList(s.strip());
+    computeList(s.split(' '));
+    
