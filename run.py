@@ -33,6 +33,10 @@ class calculator:
         if self.index < len(self.record)-1:
             self.index += 1;
         
+        # Update input and output
+        self.In.set(self.record[self.index])
+        self.Out.set('')
+        
         # Update self.toCompute
         self.toCompute = self.record[self.index].split();
     
@@ -46,8 +50,12 @@ class calculator:
         if self.index >= 1:
             self.index -= 1;
         
+        # Update input and output
+        self.In.set(self.record[self.index])
+        self.Out.set('')
+        
         # Update self.toCompute
-        self.toCompute = self.record[self.index].split();            
+        self.toCompute = self.record[self.index].split()
     
     def updateRecord(self, text):
         """ (calculator, str) -> NoneType
@@ -76,9 +84,10 @@ class calculator:
         Adds text to all string and list variables that are to be used for computing.
         """
         
-        # If there is an output, clear it.
-        if self.Out.get() == '':
-            self.Out.set("")
+        # If there is an output, clear first.
+        if self.Out.get() != '':
+            self.clear()
+        
         if self.In.get() == '':
             self.record = [] + self.record
         
@@ -98,7 +107,10 @@ class calculator:
             del self.record[:self.index]
         
         # Consider using try-except for errors.
-        self.Out.set(computeList(self.toCompute)[0])
+        try:
+            self.Out.set(computeList(self.toCompute)[0])
+        except:
+            self.Out.set(errMessage)
     
     def clear(self):
         """ (calculator) -> NoneType
@@ -118,6 +130,9 @@ class calculator:
         
         Deletes the last added button into input.
         """
+        
+        # Clear output
+        self.set('')
         
         # Updates self.toCompute
         s = self.toCompute[-1]
@@ -208,8 +223,8 @@ class calculator:
         Button(seFrame, text=' = ', height=2, width=10, command=lambda: self.compute() ).grid(row=1,column=1)
         
         # Bottom row: [ PRE | FOR || DEL | CLR ]
-        Button(SwFrame, text='last',   height=2, width=10, command=lambda: self.decIndex()).grid(row=0,column=0)
-        Button(SwFrame, text='next',   height=2, width=10, command=lambda: self.incIndex()).grid(row=0,column=1)
+        Button(SwFrame, text='last',   height=2, width=10, command=lambda: self.incIndex()).grid(row=0,column=0)
+        Button(SwFrame, text='next',   height=2, width=10, command=lambda: self.decIndex()).grid(row=0,column=1)
         Button(SeFrame, text='delete', height=2, width=10, command=lambda: self.delete()  ).grid(row=0,column=2)
         Button(SeFrame, text='clear',  height=2, width=10, command=lambda: self.clear()   ).grid(row=0,column=3)
         
